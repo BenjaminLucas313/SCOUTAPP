@@ -12,26 +12,11 @@ export function AuthGate() {
   useEffect(() => {
     if (loading) return;
 
-    const isLegacyAuthPath =
-      pathname === '/sign-in' ||
-      pathname === '/(auth)/sign-in' ||
-      pathname === '/signup' ||
-      pathname === '/(auth)/signup';
-
-    if (isLegacyAuthPath) {
-      router.replace('/login');
-      return;
-    }
-
-    const inAuthScreen =
-      pathname === '/login' || pathname === '/register';
+    const inAuthScreen = pathname === '/login' || pathname === '/register';
 
     if (!user && !inAuthScreen) {
       router.replace('/login');
-      return;
-    }
-
-    if (user && inAuthScreen) {
+    } else if (user && inAuthScreen) {
       router.replace('/');
     }
   }, [user, loading, pathname, router]);

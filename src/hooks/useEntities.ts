@@ -190,15 +190,3 @@ export function useRemoveFromShortlist() {
   });
 }
 
-export function useAddPlayerToShortlist() {
-  const qc = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ shortlistId, playerId }: { shortlistId: string; playerId: string }) =>
-      addPlayerToShortlist(shortlistId, playerId),
-
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: queryKeys.shortlists.all });
-    },
-  });
-}

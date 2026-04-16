@@ -22,8 +22,9 @@ export default function LoginScreen() {
       await signIn({ email, password });
 
       router.replace('/');
-    } catch (err: any) {
-      Alert.alert('Error al iniciar sesión', err?.message ?? 'Error desconocido');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Error desconocido';
+      Alert.alert('Error al iniciar sesión', msg);
     } finally {
       setLoading(false);
     }

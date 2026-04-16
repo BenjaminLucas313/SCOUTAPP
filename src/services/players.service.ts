@@ -73,7 +73,7 @@ export async function createPlayer(input: PlayerInsert): Promise<Player> {
 export async function updatePlayer(id: string, input: PlayerUpdate): Promise<Player> {
   const { data, error } = await supabase
     .from(TABLE)
-    .update({ ...input, updated_at: new Date().toISOString() })
+    .update(input)
     .eq('id', id)
     .select()
     .single();

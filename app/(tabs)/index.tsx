@@ -41,10 +41,6 @@ export default function PlayersScreen() {
     },
   });
 
-  const handleSignOut = async () => {
-    await signOutMutation.mutateAsync();
-  };
-
   const activeFilterCount = countActiveFilters({
     ...filters,
     search: search || undefined,
@@ -68,7 +64,7 @@ export default function PlayersScreen() {
 
           <View className="flex-row items-center gap-2">
             <Pressable
-              onPress={handleSignOut}
+              onPress={() => signOutMutation.mutate()}
               disabled={signOutMutation.isPending}
               className="bg-red-500/20 px-3 py-1.5 rounded-lg"
             >
