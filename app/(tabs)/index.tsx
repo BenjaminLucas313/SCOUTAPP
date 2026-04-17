@@ -25,10 +25,12 @@ import {
 } from '@/src/lib/ranking';
 import type { PlayerFilters, RankingConfig } from '@/src/types';
 import { signOut } from '@/src/services/auth/sign-out';
+import { FilterModal } from '@/src/components/players/FilterModal';
 
 export default function PlayersScreen() {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<PlayerFilters>({});
+  const [showFilters, setShowFilters] = useState(false);
   const [rankingConfig, setRankingConfig] =
     useState<RankingConfig>(DEFAULT_RANKING_CONFIG);
 
@@ -98,12 +100,12 @@ export default function PlayersScreen() {
           </View>
 
           <TouchableOpacity
-            onPress={() => {
-              /* TODO: abrir modal de filtros */
-            }}
-            className="bg-surface-1 border border-white/5 rounded-xl px-3 items-center justify-center"
+            onPress={() => setShowFilters(true)}
+            className={`bg-surface-1 border rounded-xl px-3 items-center justify-center ${
+              activeFilterCount > 0 ? 'border-brand-500/50' : 'border-white/5'
+            }`}
           >
-            <Text className="text-gray-400 text-sm">
+            <Text className={`text-sm ${activeFilterCount > 0 ? 'text-brand-100' : 'text-gray-400'}`}>
               {activeFilterCount > 0 ? `⚙️ ${activeFilterCount}` : '⚙️'}
             </Text>
           </TouchableOpacity>
@@ -191,6 +193,13 @@ export default function PlayersScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
+
+      <FilterModal
+        visible={showFilters}
+        filters={filters}
+        onApply={setFilters}
+        onClose={() => setShowFilters(false)}
+      />
     </SafeAreaView>
   );
 }

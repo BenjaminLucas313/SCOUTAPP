@@ -8,7 +8,7 @@ import { usePlayer, useDeletePlayer } from '../../src/hooks/usePlayers';
 import { usePlayerNotes } from '../../src/hooks/useEntities';
 import { AttributeGrid } from '../../src/components/ui/AttributeBar';
 import { Badge, Card, Divider, Text as AppText } from '../../src/components/ui';
-import { useAddPlayerToShortlist, useShortlists } from '../../src/hooks/useEntities';
+import { useAddToShortlist, useShortlists } from '../../src/hooks/useEntities';
 
 const notify = (msg: string) => {
   if (typeof window !== 'undefined') {
@@ -28,7 +28,7 @@ export default function PlayerDetailScreen() {
   const { data: notes = [] } = usePlayerNotes(id ?? '');
   const deletePlayer = useDeletePlayer();
   const { data: shortlists = [] } = useShortlists();
-  const addToShortlistMutation = useAddPlayerToShortlist();
+  const addToShortlistMutation = useAddToShortlist();
   const [activeTab, setActiveTab] = useState<'info' | 'notes'>('info');
 
   const [showShortlists, setShowShortlists] = useState(false);
@@ -115,9 +115,17 @@ export default function PlayerDetailScreen() {
 
 
 
+          <View className="flex-row gap-2 mt-2">
+            <TouchableOpacity
+              onPress={() => router.push({ pathname: '/compare', params: { playerAId: player.id } })}
+              className="flex-1 bg-surface-2 border border-white/10 px-3 py-2 rounded-lg items-center"
+            >
+              <Text className="text-gray-200 text-sm font-semibold">⚖️ Comparar</Text>
+            </TouchableOpacity>
+
           <TouchableOpacity
   onPress={() => setShowShortlists((prev) => !prev)}
-  className="bg-brand-500 px-3 py-2 rounded-lg mt-2"
+  className="flex-1 bg-brand-500 px-3 py-2 rounded-lg items-center"
 >
   <Text className="text-white text-sm font-semibold">
     + Agregar a shortlist
@@ -140,8 +148,9 @@ export default function PlayerDetailScreen() {
 
               notify(`Se agregó a ${shortlist.name}`);
               setShowShortlists(false);
-            } catch (err: any) {
-              notify(err.message ?? 'No se pudo agregar a la shortlist');
+            } catch (err) {
+              const msg = err instanceof Error ? err.message : 'No se pudo agregar';
+              notify(msg);
             }
           }}
           className="bg-surface-2 border border-white/10 rounded-lg px-3 py-2"
@@ -161,6 +170,7 @@ export default function PlayerDetailScreen() {
     )}
   </View>
 )}
+          </View>
 
 
 

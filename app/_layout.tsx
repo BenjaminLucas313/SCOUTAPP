@@ -65,6 +65,26 @@ export default function RootLayout() {
                 presentation: 'card',
               }}
             />
+            <Stack.Screen
+              name="player/[id]/new-note"
+              options={{
+                headerShown: true,
+                headerStyle: { backgroundColor: '#111827' },
+                headerTintColor: '#fff',
+                headerTitle: 'Nueva nota',
+                presentation: 'card',
+              }}
+            />
+            <Stack.Screen
+              name="compare"
+              options={{
+                headerShown: true,
+                headerStyle: { backgroundColor: '#111827' },
+                headerTintColor: '#fff',
+                headerTitle: 'Comparar jugadores',
+                presentation: 'card',
+              }}
+            />
           </Stack>
         </QueryClientProvider>
       </SafeAreaProvider>
