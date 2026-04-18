@@ -3,6 +3,7 @@ node_modules/
 dist/
 web-build/
 release/
+.env
 .env.local
 .env.*.local
 *.log
